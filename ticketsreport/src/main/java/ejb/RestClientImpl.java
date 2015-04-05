@@ -3,6 +3,7 @@
  */
 package ejb;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -47,6 +48,9 @@ public class RestClientImpl implements RestClient {
 				.type("application/x-www-form-urlencoded")
 				.accept("application/json")
                 .post(ClientResponse.class, formData);
+		if(response.getStatus() == 401){
+			return new ArrayList<TicketVO>();
+		}
 		TicketListVO ticketList = response.getEntity(TicketListVO.class);
 		return ticketList.getTicketList();
  
