@@ -7,6 +7,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import ejb.MainLogic;
 import ejb.RestClient;
@@ -26,50 +28,51 @@ public class LoginBean {
 	@EJB
 	private RestClient restClient; 
 	
-	@ManagedProperty(value = "#{formBean}")
+	/*@ManagedProperty(value = "#{formBean}")
 	private FormBean formBean;
 	
-	/**
+	*//**
 	 * @return the formBean
-	 */
+	 *//*
 	public FormBean getFormBean() {
 		return formBean;
 	}
 
-	/**
+	*//**
 	 * @param formBean the formBean to set
-	 */
+	 *//*
 	public void setFormBean(FormBean formBean) {
 		this.formBean = formBean;
-	}
+	}*/
 
 	private String username;
 	private String password;
-	private String token;
-	/**
-	 * @return the token
-	 */
-	public String getToken() {
-		return token;
-	}
-
-	/**
-	 * @param token the token to set
-	 */
-	public void setToken(String token) {
-		this.token = token;
-	}
+	
 
 	public String login(){
 		String input = restClient.checkCredentials(username,password);
 		if (input != null && !input.equals("")) {
-			token = input;
-			formBean.setToken(input);
+			HttpSession session = (HttpSession) FacesContext
+										          .getCurrentInstance()
+										          .getExternalContext()
+										          .getSession(false);
+            session.setAttribute("token", input);
+            session.setAttribute("username", username);
+			//formBean.setToken(input);
 			return "index";
 		} else {
 			return "login";
 		}
 		
+	}
+	
+	public String logout() {
+	      HttpSession session = (HttpSession) FacesContext
+										          .getCurrentInstance()
+										          .getExternalContext()
+										          .getSession(false);
+	      session.invalidate();
+	      return "login";
 	}
 	
 	/**

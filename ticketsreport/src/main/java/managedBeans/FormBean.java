@@ -3,6 +3,8 @@ package managedBeans;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import ejb.MainLogic;
 
@@ -18,20 +20,20 @@ public class FormBean {
 	
 	private String dateFrom;
 	private String dateTo;
-	private String token;
+	/*private String token;
 	
-	/**
+	*//**
 	 * @return the token
-	 */
+	 *//*
 	public String getToken() {
 		return token;
 	}
-	/**
+	*//**
 	 * @param token the token to set
-	 */
+	 *//*
 	public void setToken(String token) {
 		this.token = token;
-	}
+	}*/
 	public String getDateFrom() {
 		return dateFrom;
 	}
@@ -46,8 +48,13 @@ public class FormBean {
 	}
 	
 	public String getTicketList(){
+		HttpSession session = (HttpSession) FacesContext
+		          .getCurrentInstance()
+		          .getExternalContext()
+		          .getSession(false);
+		String token = (String) session.getAttribute("token");
 		mainLogic.process(dateFrom, dateTo, token);
-		return "welcome";
+		return "index";
 	}
 	
 }
