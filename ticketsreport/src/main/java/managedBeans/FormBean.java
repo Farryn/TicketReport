@@ -20,20 +20,15 @@ public class FormBean {
 	
 	private String dateFrom;
 	private String dateTo;
-	/*private String token;
+	private String error;
 	
-	*//**
-	 * @return the token
-	 *//*
-	public String getToken() {
-		return token;
+	
+	public String getError() {
+		return error;
 	}
-	*//**
-	 * @param token the token to set
-	 *//*
-	public void setToken(String token) {
-		this.token = token;
-	}*/
+	public void setError(String error) {
+		this.error = error;
+	}
 	public String getDateFrom() {
 		return dateFrom;
 	}
@@ -53,7 +48,11 @@ public class FormBean {
 		          .getExternalContext()
 		          .getSession(false);
 		String token = (String) session.getAttribute("token");
-		mainLogic.process(dateFrom, dateTo, token);
+		error="";
+		String status = mainLogic.process(dateFrom, dateTo, token);
+		if (!status.equals("OK")) {
+			error = status;
+		}
 		return "index";
 	}
 	

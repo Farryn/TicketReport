@@ -9,13 +9,13 @@ public class TicketVO {
 	public TicketVO() {
 	}
 
-	private Date depTime;
+	private String depTime;
 	private String firstName;
 	private String lastName;
 	private String stationFrom;
 	private String stationTo;
 	
-	public Date getDepTime() {
+	public String getDepTime() {
 		return depTime;
 	}
 	public String getFirstName() {
@@ -30,7 +30,7 @@ public class TicketVO {
 	public String getStationTo() {
 		return stationTo;
 	}
-	public void setDepTime(Date depTime) {
+	public void setDepTime(String depTime) {
 		this.depTime = depTime;
 	}
 	public void setFirstName(String firstName) {

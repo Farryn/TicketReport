@@ -3,6 +3,7 @@
  */
 package ejb;
 
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -15,5 +16,5 @@ import entity.TicketVO;
  */
 @Local
 public interface CreatePDF {
-	public String create(List<TicketVO> ticketList);
+	public void create(List<TicketVO> ticketList, OutputStream output, String filename);
 }

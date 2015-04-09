@@ -11,5 +11,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface MainLogic {
-	public void process(String from, String to, String token);
+	public String process(String from, String to, String token);
 }

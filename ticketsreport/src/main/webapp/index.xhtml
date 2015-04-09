@@ -19,7 +19,7 @@
     	<div id="header-wrapper">
 			<div id="header" class="container">
 				<div id="logo">
-					<h1><a href="/"><span>HappyTrain</span></a></h1>
+					<h1><a href="#{facesContext.externalContext.requestContextPath}"><span>HappyTrain</span></a></h1>
 				</div>
 				<div id="login">
 				<span>Добро пожаловать, </span>
@@ -44,6 +44,7 @@
 	    	   <h:commandButton value="Получить" action="#{formBean.getTicketList}" class="button"></h:commandButton>
 	    	</h:form>
     	</div>
+    	<div><h:outputText>#{formBean.error}</h:outputText></div>
     </div>
     </h:body>
 </html>

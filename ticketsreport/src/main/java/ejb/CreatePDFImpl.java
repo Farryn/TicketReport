@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,18 +30,13 @@ public class CreatePDFImpl implements CreatePDF {
 	}
 	
 	@Override
-	public String create(List<TicketVO> ticketList){
+	public void create(List<TicketVO> ticketList, OutputStream stream, String filename){
 		Document document = new Document();
-		DateFormat df = new SimpleDateFormat("dd-M-yyyy_HH-mm-ss");
-    	Date today = Calendar.getInstance().getTime();        
-    	String reportDate = df.format(today);
-    	String filename = "C:/Program Files (x86)/wildfly/wildfly-8.2.0.Final/files/File_"  + reportDate + ".pdf";
+		
 	    try {
-	    	
 	    	File file = new File(filename);
 	    	file.createNewFile();
-	    	 
-			PdfWriter.getInstance(document, new FileOutputStream(file));
+			PdfWriter.getInstance(document, stream);
 		} catch (FileNotFoundException | DocumentException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -74,7 +70,7 @@ public class CreatePDFImpl implements CreatePDF {
 	    for(TicketVO ticket: ticketList){
 	    	table.addCell(ticket.getFirstName());
 	    	table.addCell(ticket.getLastName());
-	    	table.addCell(df.format(ticket.getDepTime()));
+	    	table.addCell(ticket.getDepTime());
 	    	table.addCell(ticket.getStationFrom());
 	    	table.addCell(ticket.getStationTo());
 	    }
@@ -84,6 +80,5 @@ public class CreatePDFImpl implements CreatePDF {
 			e.printStackTrace();
 		}
 	    document.close();
-	    return filename;
 	}
 }

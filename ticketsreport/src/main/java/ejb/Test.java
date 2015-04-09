@@ -17,7 +17,7 @@ public class Test {
 		TicketVO ticket = new TicketVO();
 		ticket.setFirstName("1");
 		ticket.setLastName("1");
-		ticket.setDepTime(new Date());
+		//ticket.setDepTime(new Date());
 		ticket.setStationFrom("1");
 		ticket.setStationTo("1");
 		ticketList.add(ticket);
@@ -25,11 +25,11 @@ public class Test {
 		TicketVO ticket2 = new TicketVO();
 		ticket2.setFirstName("2");
 		ticket2.setLastName("2");
-		ticket2.setDepTime(new Date());
+		//ticket2.setDepTime(new Date());
 		ticket2.setStationFrom("2");
 		ticket2.setStationTo("2");
 		ticketList.add(ticket2);
-		pdf.create(ticketList);
+		//pdf.create(ticketList);
 		System.out.println("Ready");
 	}
 }

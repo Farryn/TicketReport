@@ -52,7 +52,11 @@ public class RestClientImpl implements RestClient {
 			return new ArrayList<TicketVO>();
 		}
 		TicketListVO ticketList = response.getEntity(TicketListVO.class);
-		return ticketList.getTicketList();
+		List<TicketVO> resultList = ticketList.getTicketList();
+		if (resultList == null || resultList.isEmpty()) {
+			return new ArrayList<TicketVO>(); 
+		}
+		return resultList;
  
 	}
 
