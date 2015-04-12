@@ -38,10 +38,12 @@ public class CreatePDFImpl implements CreatePDF {
 	 */
 	@Override
 	public String create(List<TicketVO> ticketList, OutputStream stream, String filename){
+		if(ticketList.isEmpty())
+			return "Empty List";
+		
 		Document document = new Document();
 		
 	    try {
-	    	LOG.info("Creating new file");
 			PdfWriter.getInstance(document, stream);
 		} catch (DocumentException e) {
 			LOG.warn("Exception" + e);
