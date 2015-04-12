@@ -1,17 +1,12 @@
 package ejb;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
+
+import org.apache.log4j.Logger;
+
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -23,28 +18,38 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import entity.TicketVO;
 
+/**
+ * @author Damir Tuktamyshev
+ *
+ */
 @Stateless
 public class CreatePDFImpl implements CreatePDF {
 
+	/**
+	 * Logger.
+	 */
+	private static final Logger LOG = Logger.getLogger(CreatePDFImpl.class);
+	
 	public CreatePDFImpl() {
 	}
 	
+	/* (non-Javadoc)
+	 * @see ejb.CreatePDF#create(java.util.List, java.io.OutputStream, java.lang.String)
+	 */
 	@Override
-	public void create(List<TicketVO> ticketList, OutputStream stream, String filename){
+	public String create(List<TicketVO> ticketList, OutputStream stream, String filename){
 		Document document = new Document();
 		
 	    try {
-	    	File file = new File(filename);
-	    	file.createNewFile();
+	    	LOG.info("Creating new file");
 			PdfWriter.getInstance(document, stream);
-		} catch (FileNotFoundException | DocumentException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (DocumentException e) {
+			LOG.warn("Exception" + e);
+			return "FileNotFound";
 		}
 	    document.open();
 	    
-	    
+	    LOG.info("Creating document's design");
 	    PdfPTable table = new PdfPTable(5);
 	    PdfPCell c1 = new PdfPCell(new Phrase("First Name"));
 	    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -67,6 +72,7 @@ public class CreatePDFImpl implements CreatePDF {
 	    table.addCell(c1);
 	    table.setHeaderRows(1);
 	    
+	    LOG.info("Adding content into document");
 	    for(TicketVO ticket: ticketList){
 	    	table.addCell(ticket.getFirstName());
 	    	table.addCell(ticket.getLastName());
@@ -77,8 +83,10 @@ public class CreatePDFImpl implements CreatePDF {
 	    try {
 			document.add(table);
 		} catch (DocumentException e) {
-			e.printStackTrace();
+			LOG.warn("Exception" + e);
+			return "Document Exception";
 		}
 	    document.close();
+	    return "OK";
 	}
 }

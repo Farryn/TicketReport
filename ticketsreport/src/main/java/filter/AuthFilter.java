@@ -16,17 +16,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebFilter;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author Damir Tuktamyshev
  */
 @WebFilter(filterName = "AuthFilter", urlPatterns = {"*.xhtml"})
 public class AuthFilter implements Filter {
 
+	
+	/**
+	 * Logger.
+	 */
+	private static final Logger LOG = Logger.getLogger(AuthFilter.class);
 	/**
 	 * 
 	 */
 	public AuthFilter() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)
@@ -34,7 +40,6 @@ public class AuthFilter implements Filter {
 	 */
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -56,8 +61,8 @@ public class AuthFilter implements Filter {
 	            else   
 	                   res.sendRedirect(req.getContextPath() + "/login.xhtml");  
 	      }
-	     catch(Throwable t) {
-	         System.out.println( t.getMessage());
+	     catch(Exception e) {
+	         LOG.warn("Exception " + e);
 	     }
 
 	}
@@ -67,7 +72,6 @@ public class AuthFilter implements Filter {
 	 */
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
 
 	}
 
