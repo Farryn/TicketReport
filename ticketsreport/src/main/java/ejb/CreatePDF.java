@@ -22,5 +22,5 @@ public interface CreatePDF {
 	 * @param filename filename
 	 * @return status
 	 */
-	public String create(List<TicketVO> ticketList, OutputStream output, String filename);
+	public String create(List<TicketVO> ticketList, OutputStream output, String filename, String from, String to);
 }

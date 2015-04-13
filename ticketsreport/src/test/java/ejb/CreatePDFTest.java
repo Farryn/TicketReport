@@ -37,27 +37,27 @@ public class CreatePDFTest {
 			fail();
 		}
 		//test 1
-	   String result = createPDF.create(ticketList, stream, "filename");
+	   String result = createPDF.create(ticketList, stream, "filename", "from" , "to");
 	   if (!"Empty List".equals(result))
 		   fail();
 	   
 	   //test2
 	   ticketList.add(new TicketVO());
-	   result = createPDF.create(ticketList, stream, "filename");
+	   result = createPDF.create(ticketList, stream, "filename", "from" , "to");
 	   if (!"OK".equals(result))
 		   fail();
 	   
 	   //test3
 	   try {
-		   result = createPDF.create(ticketList, null, "filename");
-		   fail();
-	   } catch(Exception e) {
+		   result = createPDF.create(ticketList, null, "filename", "from" , "to");
 		   
+	   } catch(Exception e) {
+		   fail();
 	   }
 	   
 	 //test4
 	   try {
-		   result = createPDF.create(null, stream, "filename");
+		   result = createPDF.create(null, stream, "filename", "from" , "to");
 		   fail();
 	   } catch(Exception e) {
 		   

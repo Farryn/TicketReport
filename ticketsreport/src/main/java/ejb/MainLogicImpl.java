@@ -68,7 +68,7 @@ public class MainLogicImpl implements MainLogic {
 			return "Empty List";
 		}
 		LOG.info("Creating pdf");
-		String status = createPdf(ticketList);
+		String status = createPdf(ticketList, from ,to);
 		if (!status.equals("OK")) {
 			LOG.warn("Something wrong");
 			return status;
@@ -94,13 +94,13 @@ public class MainLogicImpl implements MainLogic {
 	 * @param ticketList list of Tickets
 	 * @return status
 	 */
-	private String createPdf(List<TicketVO> ticketList) {
+	private String createPdf(List<TicketVO> ticketList, String from, String to) {
 		FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
         LOG.info("Generating file name");
         DateFormat df = new SimpleDateFormat("dd-M-yyyy_HH-mm-ss");
     	String reportDate = df.format(new Date());
-    	String filename = "C:/Program Files (x86)/wildfly/wildfly-8.2.0.Final/files/File_"  + reportDate + ".pdf";
+    	String filename = "File_"  + reportDate + ".pdf";
     	ec.responseReset();
         ec.setResponseContentType("application/pdf");
         ec.setResponseHeader("Content-Disposition", "inline; filename=\""
@@ -113,7 +113,7 @@ public class MainLogicImpl implements MainLogic {
 			return "IO exception";
 		}
         LOG.info("Creating design and putting content");
-        String status = createPDF.create(ticketList, output, filename);
+        String status = createPDF.create(ticketList, output, filename, from, to);
         if (!status.equals("OK")) {
         	LOG.warn("Fail");
         	return "Fail";
